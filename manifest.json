@@ -1,0 +1,194 @@
+{
+ "title": "3D humans: a user study (part 2)",
+ "intro": [
+  "Each subject is a person in a short video (top) and, below it, three 3D reconstructions of that person, labelled A to C; each turns once in 12 seconds.",
+  "For each person, choose the reconstruction that looks most like the person in the video and press Submit. Click any video to see it at full resolution."
+ ],
+ "people": [
+  {
+   "id": "58592ee0",
+   "results": [
+    {
+     "id": "fa7c344b1205",
+     "src": "videos/58592ee0/fa7c344b1205_s.mp4",
+     "full": "videos/58592ee0/fa7c344b1205.mp4",
+     "poster": "videos/58592ee0/fa7c344b1205.jpg",
+     "w": 2720,
+     "h": 3760
+    },
+    {
+     "id": "dd6de5eb36cd",
+     "src": "videos/58592ee0/dd6de5eb36cd_s.mp4",
+     "full": "videos/58592ee0/dd6de5eb36cd.mp4",
+     "poster": "videos/58592ee0/dd6de5eb36cd.jpg",
+     "w": 2720,
+     "h": 3760
+    },
+    {
+     "id": "8e22081a3b6b",
+     "src": "videos/58592ee0/8e22081a3b6b_s.mp4",
+     "full": "videos/58592ee0/8e22081a3b6b.mp4",
+     "poster": "videos/58592ee0/8e22081a3b6b.jpg",
+     "w": 2720,
+     "h": 3760
+    }
+   ],
+   "clip": {
+    "src": "videos/58592ee0/clip_s.mp4",
+    "full": "videos/58592ee0/clip.mp4",
+    "poster": "videos/58592ee0/clip.jpg",
+    "w": 1920,
+    "h": 1080
+   }
+  },
+  {
+   "id": "d6df529a",
+   "results": [
+    {
+     "id": "0766509c217e",
+     "src": "videos/d6df529a/0766509c217e_s.mp4",
+     "full": "videos/d6df529a/0766509c217e.mp4",
+     "poster": "videos/d6df529a/0766509c217e.jpg",
+     "w": 2752,
+     "h": 3664
+    },
+    {
+     "id": "19763555dae7",
+     "src": "videos/d6df529a/19763555dae7_s.mp4",
+     "full": "videos/d6df529a/19763555dae7.mp4",
+     "poster": "videos/d6df529a/19763555dae7.jpg",
+     "w": 2752,
+     "h": 3664
+    },
+    {
+     "id": "0c72e67dc469",
+     "src": "videos/d6df529a/0c72e67dc469_s.mp4",
+     "full": "videos/d6df529a/0c72e67dc469.mp4",
+     "poster": "videos/d6df529a/0c72e67dc469.jpg",
+     "w": 2752,
+     "h": 3664
+    }
+   ],
+   "clip": {
+    "src": "videos/d6df529a/clip_s.mp4",
+    "full": "videos/d6df529a/clip.mp4",
+    "poster": "videos/d6df529a/clip.jpg",
+    "w": 1920,
+    "h": 1080
+   }
+  },
+  {
+   "id": "b9e0ee29",
+   "results": [
+    {
+     "id": "0b973a2fcf76",
+     "src": "videos/b9e0ee29/0b973a2fcf76_s.mp4",
+     "full": "videos/b9e0ee29/0b973a2fcf76.mp4",
+     "poster": "videos/b9e0ee29/0b973a2fcf76.jpg",
+     "w": 2688,
+     "h": 3712
+    },
+    {
+     "id": "d8b9e52f372c",
+     "src": "videos/b9e0ee29/d8b9e52f372c_s.mp4",
+     "full": "videos/b9e0ee29/d8b9e52f372c.mp4",
+     "poster": "videos/b9e0ee29/d8b9e52f372c.jpg",
+     "w": 2688,
+     "h": 3712
+    },
+    {
+     "id": "056e9b62d2fe",
+     "src": "videos/b9e0ee29/056e9b62d2fe_s.mp4",
+     "full": "videos/b9e0ee29/056e9b62d2fe.mp4",
+     "poster": "videos/b9e0ee29/056e9b62d2fe.jpg",
+     "w": 2688,
+     "h": 3712
+    }
+   ],
+   "clip": {
+    "src": "videos/b9e0ee29/clip_s.mp4",
+    "full": "videos/b9e0ee29/clip.mp4",
+    "poster": "videos/b9e0ee29/clip.jpg",
+    "w": 1920,
+    "h": 1080
+   }
+  },
+  {
+   "id": "d8e853ea",
+   "results": [
+    {
+     "id": "33b71d1de0d2",
+     "src": "videos/d8e853ea/33b71d1de0d2_s.mp4",
+     "full": "videos/d8e853ea/33b71d1de0d2.mp4",
+     "poster": "videos/d8e853ea/33b71d1de0d2.jpg",
+     "w": 2704,
+     "h": 3696
+    },
+    {
+     "id": "991bfff73c72",
+     "src": "videos/d8e853ea/991bfff73c72_s.mp4",
+     "full": "videos/d8e853ea/991bfff73c72.mp4",
+     "poster": "videos/d8e853ea/991bfff73c72.jpg",
+     "w": 2704,
+     "h": 3696
+    },
+    {
+     "id": "412d51d9b72f",
+     "src": "videos/d8e853ea/412d51d9b72f_s.mp4",
+     "full": "videos/d8e853ea/412d51d9b72f.mp4",
+     "poster": "videos/d8e853ea/412d51d9b72f.jpg",
+     "w": 2704,
+     "h": 3696
+    }
+   ],
+   "clip": {
+    "src": "videos/d8e853ea/clip_s.mp4",
+    "full": "videos/d8e853ea/clip.mp4",
+    "poster": "videos/d8e853ea/clip.jpg",
+    "w": 1920,
+    "h": 1080
+   }
+  },
+  {
+   "id": "c1548f4d",
+   "results": [
+    {
+     "id": "b74caa14d562",
+     "src": "videos/c1548f4d/b74caa14d562_s.mp4",
+     "full": "videos/c1548f4d/b74caa14d562.mp4",
+     "poster": "videos/c1548f4d/b74caa14d562.jpg",
+     "w": 2720,
+     "h": 3760
+    },
+    {
+     "id": "f93f07fc5609",
+     "src": "videos/c1548f4d/f93f07fc5609_s.mp4",
+     "full": "videos/c1548f4d/f93f07fc5609.mp4",
+     "poster": "videos/c1548f4d/f93f07fc5609.jpg",
+     "w": 2720,
+     "h": 3760
+    },
+    {
+     "id": "f246bfb0a9af",
+     "src": "videos/c1548f4d/f246bfb0a9af_s.mp4",
+     "full": "videos/c1548f4d/f246bfb0a9af.mp4",
+     "poster": "videos/c1548f4d/f246bfb0a9af.jpg",
+     "w": 2720,
+     "h": 3760
+    }
+   ],
+   "clip": {
+    "src": "videos/c1548f4d/clip_s.mp4",
+    "full": "videos/c1548f4d/clip.mp4",
+    "poster": "videos/c1548f4d/clip.jpg",
+    "w": 1920,
+    "h": 1080
+   }
+  }
+ ],
+ "n_results": 3,
+ "column_aspects": {
+  "clip": 1.7778,
+  "result": 0.7241
+ }
+}

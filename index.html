@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D humans: a user study (part 2)</title><style>
+:root { --bg: #fbfbfa; --fg: #1d1d1f; --muted: #6b6b70; --line: #e4e4e2; --accent: #1f5fbf; --warn: #b3261e; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141416; --fg: #ececee; --muted: #9a9aa2; --line: #2c2c31; --accent: #8ab4f8; --warn: #ff8a80; } }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+header { max-width: 1100px; margin: 0 auto; padding: 40px 16px 8px; }
+h1 { font-size: 28px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+header p { color: var(--muted); margin: 0 0 10px; max-width: 900px; }
+.status { color: var(--warn) !important; font-weight: 600; }
+.controls { max-width: 1100px; margin: 0 auto; padding: 8px 16px 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+button { font: inherit; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+button:hover { border-color: var(--accent); color: var(--accent); }
+.grid { padding: 0 16px 64px; }
+.inner { max-width: 1240px; margin: 0 auto; }
+.cols button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.colhead { position: sticky; top: 0; z-index: 5; background: var(--bg); display: flex; gap: 6px; padding: 8px 0 6px; border-bottom: 1px solid var(--line); }
+.colhead div { font-size: 13px; font-weight: 600; color: var(--muted); text-align: center; }
+.person { margin-top: 56px; padding-top: 8px; border-top: 1px solid var(--line); }
+.pname { display: flex; gap: 12px; align-items: baseline; margin: 0 0 8px; }
+.pname h2 { font-size: 18px; margin: 0; }
+.pname a { color: var(--accent); font-size: 13px; text-decoration: none; }
+.clipwrap { max-width: 640px; margin: 0 auto 18px; }
+.results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 700px) { .results { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+.cell { display: flex; flex-direction: column; gap: 8px; }
+.cell .tile { width: 100%; }
+.pick { width: 100%; font-weight: 700; font-size: 16px; padding: 6px 0; }
+.pick.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+.pick:disabled { opacity: 0.45; cursor: default; }
+.q { font-weight: 600; margin: 0 0 8px; }
+.tile { position: relative; background: #fff; border-radius: 4px; overflow: hidden; cursor: zoom-in; }
+.tile video { display: block; width: 100%; height: 100%; object-fit: contain; background: #fff; }
+.tile.clip video { object-fit: cover; background: #000; }
+.tile .lab { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.62); color: #fff; font-size: 13px; font-weight: 700;
+             border-radius: 4px; padding: 1px 7px; pointer-events: none; }
+.tile.na { cursor: default; display: flex; align-items: center; justify-content: center; color: #888; font-size: 13px; }
+.form { display: flex; gap: 12px; align-items: center; justify-content: center; margin: 16px 0 0; }
+.sctl { display: flex; gap: 10px; justify-content: center; margin: 0 0 14px; }
+.form .q { font-weight: 600; margin-right: 6px; }
+.form .choices button { min-width: 38px; font-weight: 700; }
+.form .choices button.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+.form .submit { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.form .submit:disabled, .form .choices button:disabled { opacity: 0.45; cursor: default; }
+.form .msg { color: var(--muted); font-size: 13px; }
+.form .msg.ok { color: #188038; font-weight: 600; }
+.tile.sel { outline: 4px solid var(--accent); outline-offset: -4px; }
+.progress { font-weight: 600; }
+.lb { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 50; display: none; align-items: center; justify-content: center; flex-direction: column; padding: 16px; }
+.lb.on { display: flex; }
+.lb video { max-width: 100%; max-height: calc(100vh - 80px); background: #fff; }
+.lb .cap { color: #ddd; font-size: 14px; margin-top: 10px; text-align: center; }
+.lb .x { position: absolute; top: 12px; right: 18px; color: #fff; font-size: 28px; cursor: pointer; background: none; border: none; }
+</style></head>
+<body>
+<header><h1>3D humans: a user study (part 2)</h1><p>Each subject is a person in a short video (top) and, below it, three 3D reconstructions of that person, labelled A to C; each turns once in 12 seconds.</p><p>For each person, choose the reconstruction that looks most like the person in the video and press Submit. Click any video to see it at full resolution.</p></header>
+<div class="controls"><button id="sync">Restart turntables together</button><button id="pause">Pause all</button><span class="progress" id="progress"></span></div>
+<div class="grid"><div class="inner"><section class="person" data-person="58592ee0" data-num="1"><div class="pname"><h2 class="subj">Subject 1</h2></div><p class="q">Which 3D reconstruction looks most like the person in the video?</p><div class="clipwrap"><div class="tile clip" style="aspect-ratio: 1.7778;" data-full="videos/58592ee0/clip.mp4" ><video data-src="videos/58592ee0/clip_s.mp4" poster="videos/58592ee0/clip.jpg" muted loop playsinline preload="none"></video></div></div><div class="sctl"><button class="srestart" type="button">Restart together</button><button class="spause" type="button">Pause</button></div><div class="results"><div class="cell"><div class="tile " data-rid="dd6de5eb36cd" data-label="A" style="aspect-ratio: 0.7241;" data-full="videos/58592ee0/dd6de5eb36cd.mp4" ><video data-src="videos/58592ee0/dd6de5eb36cd_s.mp4" poster="videos/58592ee0/dd6de5eb36cd.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">A</button></div><div class="cell"><div class="tile " data-rid="fa7c344b1205" data-label="B" style="aspect-ratio: 0.7241;" data-full="videos/58592ee0/fa7c344b1205.mp4" ><video data-src="videos/58592ee0/fa7c344b1205_s.mp4" poster="videos/58592ee0/fa7c344b1205.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">B</button></div><div class="cell"><div class="tile " data-rid="8e22081a3b6b" data-label="C" style="aspect-ratio: 0.7241;" data-full="videos/58592ee0/8e22081a3b6b.mp4" ><video data-src="videos/58592ee0/8e22081a3b6b_s.mp4" poster="videos/58592ee0/8e22081a3b6b.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">C</button></div></div><div class="form"><button class="submit" disabled>Submit</button><span class="msg"></span></div></section><section class="person" data-person="d6df529a" data-num="2"><div class="pname"><h2 class="subj">Subject 2</h2></div><p class="q">Which 3D reconstruction looks most like the person in the video?</p><div class="clipwrap"><div class="tile clip" style="aspect-ratio: 1.7778;" data-full="videos/d6df529a/clip.mp4" ><video data-src="videos/d6df529a/clip_s.mp4" poster="videos/d6df529a/clip.jpg" muted loop playsinline preload="none"></video></div></div><div class="sctl"><button class="srestart" type="button">Restart together</button><button class="spause" type="button">Pause</button></div><div class="results"><div class="cell"><div class="tile " data-rid="0766509c217e" data-label="A" style="aspect-ratio: 0.7241;" data-full="videos/d6df529a/0766509c217e.mp4" ><video data-src="videos/d6df529a/0766509c217e_s.mp4" poster="videos/d6df529a/0766509c217e.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">A</button></div><div class="cell"><div class="tile " data-rid="19763555dae7" data-label="B" style="aspect-ratio: 0.7241;" data-full="videos/d6df529a/19763555dae7.mp4" ><video data-src="videos/d6df529a/19763555dae7_s.mp4" poster="videos/d6df529a/19763555dae7.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">B</button></div><div class="cell"><div class="tile " data-rid="0c72e67dc469" data-label="C" style="aspect-ratio: 0.7241;" data-full="videos/d6df529a/0c72e67dc469.mp4" ><video data-src="videos/d6df529a/0c72e67dc469_s.mp4" poster="videos/d6df529a/0c72e67dc469.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">C</button></div></div><div class="form"><button class="submit" disabled>Submit</button><span class="msg"></span></div></section><section class="person" data-person="b9e0ee29" data-num="3"><div class="pname"><h2 class="subj">Subject 3</h2></div><p class="q">Which 3D reconstruction looks most like the person in the video?</p><div class="clipwrap"><div class="tile clip" style="aspect-ratio: 1.7778;" data-full="videos/b9e0ee29/clip.mp4" ><video data-src="videos/b9e0ee29/clip_s.mp4" poster="videos/b9e0ee29/clip.jpg" muted loop playsinline preload="none"></video></div></div><div class="sctl"><button class="srestart" type="button">Restart together</button><button class="spause" type="button">Pause</button></div><div class="results"><div class="cell"><div class="tile " data-rid="d8b9e52f372c" data-label="A" style="aspect-ratio: 0.7241;" data-full="videos/b9e0ee29/d8b9e52f372c.mp4" ><video data-src="videos/b9e0ee29/d8b9e52f372c_s.mp4" poster="videos/b9e0ee29/d8b9e52f372c.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">A</button></div><div class="cell"><div class="tile " data-rid="0b973a2fcf76" data-label="B" style="aspect-ratio: 0.7241;" data-full="videos/b9e0ee29/0b973a2fcf76.mp4" ><video data-src="videos/b9e0ee29/0b973a2fcf76_s.mp4" poster="videos/b9e0ee29/0b973a2fcf76.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">B</button></div><div class="cell"><div class="tile " data-rid="056e9b62d2fe" data-label="C" style="aspect-ratio: 0.7241;" data-full="videos/b9e0ee29/056e9b62d2fe.mp4" ><video data-src="videos/b9e0ee29/056e9b62d2fe_s.mp4" poster="videos/b9e0ee29/056e9b62d2fe.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">C</button></div></div><div class="form"><button class="submit" disabled>Submit</button><span class="msg"></span></div></section><section class="person" data-person="d8e853ea" data-num="4"><div class="pname"><h2 class="subj">Subject 4</h2></div><p class="q">Which 3D reconstruction looks most like the person in the video?</p><div class="clipwrap"><div class="tile clip" style="aspect-ratio: 1.7778;" data-full="videos/d8e853ea/clip.mp4" ><video data-src="videos/d8e853ea/clip_s.mp4" poster="videos/d8e853ea/clip.jpg" muted loop playsinline preload="none"></video></div></div><div class="sctl"><button class="srestart" type="button">Restart together</button><button class="spause" type="button">Pause</button></div><div class="results"><div class="cell"><div class="tile " data-rid="412d51d9b72f" data-label="A" style="aspect-ratio: 0.7241;" data-full="videos/d8e853ea/412d51d9b72f.mp4" ><video data-src="videos/d8e853ea/412d51d9b72f_s.mp4" poster="videos/d8e853ea/412d51d9b72f.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">A</button></div><div class="cell"><div class="tile " data-rid="991bfff73c72" data-label="B" style="aspect-ratio: 0.7241;" data-full="videos/d8e853ea/991bfff73c72.mp4" ><video data-src="videos/d8e853ea/991bfff73c72_s.mp4" poster="videos/d8e853ea/991bfff73c72.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">B</button></div><div class="cell"><div class="tile " data-rid="33b71d1de0d2" data-label="C" style="aspect-ratio: 0.7241;" data-full="videos/d8e853ea/33b71d1de0d2.mp4" ><video data-src="videos/d8e853ea/33b71d1de0d2_s.mp4" poster="videos/d8e853ea/33b71d1de0d2.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">C</button></div></div><div class="form"><button class="submit" disabled>Submit</button><span class="msg"></span></div></section><section class="person" data-person="c1548f4d" data-num="5"><div class="pname"><h2 class="subj">Subject 5</h2></div><p class="q">Which 3D reconstruction looks most like the person in the video?</p><div class="clipwrap"><div class="tile clip" style="aspect-ratio: 1.7778;" data-full="videos/c1548f4d/clip.mp4" ><video data-src="videos/c1548f4d/clip_s.mp4" poster="videos/c1548f4d/clip.jpg" muted loop playsinline preload="none"></video></div></div><div class="sctl"><button class="srestart" type="button">Restart together</button><button class="spause" type="button">Pause</button></div><div class="results"><div class="cell"><div class="tile " data-rid="f93f07fc5609" data-label="A" style="aspect-ratio: 0.7241;" data-full="videos/c1548f4d/f93f07fc5609.mp4" ><video data-src="videos/c1548f4d/f93f07fc5609_s.mp4" poster="videos/c1548f4d/f93f07fc5609.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">A</button></div><div class="cell"><div class="tile " data-rid="f246bfb0a9af" data-label="B" style="aspect-ratio: 0.7241;" data-full="videos/c1548f4d/f246bfb0a9af.mp4" ><video data-src="videos/c1548f4d/f246bfb0a9af_s.mp4" poster="videos/c1548f4d/f246bfb0a9af.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">B</button></div><div class="cell"><div class="tile " data-rid="b74caa14d562" data-label="C" style="aspect-ratio: 0.7241;" data-full="videos/c1548f4d/b74caa14d562.mp4" ><video data-src="videos/c1548f4d/b74caa14d562_s.mp4" poster="videos/c1548f4d/b74caa14d562.jpg" muted loop playsinline preload="none"></video></div><button class="pick" type="button">C</button></div></div><div class="form"><button class="submit" disabled>Submit</button><span class="msg"></span></div></section></div></div>
+<div class="lb" id="lb"><button class="x" aria-label="close">×</button><div id="lbbody"></div><div class="cap" id="lbcap"></div></div>
+<script>const FORM = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSeqwerck6M2KiqnG2tfJv8wkudCvjncaF6YrEBTes0ppDI6oA/formResponse", "fields": {"participant": "entry.1487203736", "person": "entry.535763043", "label": "entry.938736202", "choice": "entry.557657668", "order": "entry.981523244", "labels": "entry.854240825", "seconds": "entry.1726869064", "ua": "entry.2101260934", "version": "entry.165883241"}}, VERSION = "B 2026-11-22 18:54";
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target; if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!paused && v.closest('.person').dataset.paused !== '1') v.play().catch(() => {}); } else v.pause();
+}), { rootMargin: '300px 0px' });
+let paused = false;
+document.querySelectorAll('.tile video').forEach(v => io.observe(v));
+
+document.getElementById('sync').onclick = () => document.querySelectorAll('.results video').forEach(v => { if (v.src) { v.currentTime = 0; v.play().catch(() => {}); } });
+document.querySelectorAll('.person').forEach(sec => {
+  const pb = sec.querySelector('.spause'), rb = sec.querySelector('.srestart'), vids = () => Array.from(sec.querySelectorAll('video'));
+  pb.onclick = () => { const on = sec.dataset.paused !== '1'; sec.dataset.paused = on ? '1' : '0'; pb.textContent = on ? 'Play' : 'Pause';
+    vids().forEach(v => on ? v.pause() : (v.src && v.play().catch(() => {}))); };
+  rb.onclick = () => { sec.dataset.paused = '0'; pb.textContent = 'Pause';
+    sec.querySelectorAll('.results video').forEach(v => { if (!v.src) v.src = v.dataset.src; v.currentTime = 0; v.play().catch(() => {}); }); };
+});
+document.getElementById('pause').onclick = e => { paused = !paused; e.target.textContent = paused ? 'Play all' : 'Pause all';
+  document.querySelectorAll('.tile video').forEach(v => paused ? v.pause() : (v.src && v.play().catch(() => {}))); };
+const lb = document.getElementById('lb'), body = document.getElementById('lbbody'), cap = document.getElementById('lbcap');
+function closeLb() { lb.classList.remove('on'); body.innerHTML = ''; }
+document.querySelectorAll('.tile[data-full]').forEach(t => t.onclick = () => {
+  body.innerHTML = `<video src="${t.dataset.full}" autoplay loop muted playsinline controls></video>`;
+  cap.textContent = 'Subject ' + t.closest('.person').dataset.num + (t.dataset.label ? ' · result ' + t.dataset.label : ' · input video');
+  lb.classList.add('on');
+});
+lb.onclick = e => { if (e.target === lb || e.target.classList.contains('x')) closeLb(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+const T0 = Date.now();
+function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+let pid = store('study_pid');
+if (!pid) { pid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now(); store('study_pid', pid); }
+let done = {}; try { done = JSON.parse(store('studyb_done') || '{}') || {}; } catch (e) { done = {}; }
+const secs = Array.from(document.querySelectorAll('.person'));
+function progress() { document.getElementById('progress').textContent = 'Submitted ' + secs.filter(s => done[s.dataset.person]).length + ' of ' + secs.length; }
+secs.forEach(sec => {
+  const tiles = Array.from(sec.querySelectorAll('.results .tile[data-rid]'));
+  const picks = Array.from(sec.querySelectorAll('.results .pick'));
+  const sub = sec.querySelector('.submit'), msg = sec.querySelector('.msg');
+  const lock = () => { picks.forEach(b => b.disabled = true); sub.disabled = true; msg.textContent = 'Submitted ✓'; msg.className = 'msg ok'; };
+  picks.forEach(b => {
+    const t = b.parentElement.querySelector('.tile');
+    b.onclick = () => { sec.dataset.sel = t.dataset.rid; picks.forEach(x => x.classList.toggle('sel', x === b));
+                        tiles.forEach(x => x.classList.toggle('sel', x === t)); sub.disabled = false; msg.textContent = ''; };
+  });
+  if (done[sec.dataset.person]) lock();
+  sub.onclick = async () => {
+    const rid = sec.dataset.sel; if (!rid) return;
+    const t = tiles.find(x => x.dataset.rid === rid);
+    const body = { participant: pid, person: sec.dataset.person, choice: rid, label: t.dataset.label, order: tiles.map(x => x.dataset.rid),
+                   labels: tiles.map(x => x.dataset.label), seconds: Math.round((Date.now() - T0) / 1000), ua: navigator.userAgent, version: VERSION };
+    if (!FORM.action) { msg.textContent = 'Not recorded: responses are not connected yet.'; msg.className = 'msg'; return; }
+    sub.disabled = true; msg.textContent = 'Sending…'; msg.className = 'msg';
+    const fd = new URLSearchParams();
+    for (const [k, v] of Object.entries(body)) if (FORM.fields[k]) fd.append(FORM.fields[k], Array.isArray(v) ? v.join(' ') : String(v));
+    try {
+      await fetch(FORM.action, { method: 'POST', mode: 'no-cors', body: fd });
+      done[sec.dataset.person] = rid; store('studyb_done', JSON.stringify(done)); lock(); progress();
+    } catch (e) { sub.disabled = false; msg.textContent = 'Could not send; please try again.'; }
+  };
+});
+progress();
+</script>
+</body></html>
