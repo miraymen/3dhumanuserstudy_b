@@ -22,7 +22,7 @@ AC, AR = M["column_aspects"]["clip"], M["column_aspects"]["result"]
 FORM = json.load(open(HERE / "form.json")) if (HERE / "form.json").exists() else {}
 import time
 VERSION = "B " + time.strftime("%Y-%m-%d %H:%M")
-QUESTION = "Which 3D reconstruction looks most like the person in the video?"
+QUESTION = "Which 3D reconstruction matches the shown YouTube video best?"
 
 CSS = """
 :root { --bg: #fbfbfa; --fg: #1d1d1f; --muted: #6b6b70; --line: #e4e4e2; --accent: #1f5fbf; --warn: #b3261e; }

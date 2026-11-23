@@ -2,7 +2,7 @@
  "title": "3D humans: a user study (part 2)",
  "intro": [
   "Each subject is a person in a short video (top) and, below it, three 3D reconstructions of that person, labelled A to C; each turns once in 12 seconds.",
-  "For each person, choose the reconstruction that looks most like the person in the video and press Submit. Click any video to see it at full resolution."
+  "For each person, choose the 3D reconstruction that matches the shown YouTube video best and press Submit. Click any video to see it at full resolution."
  ],
  "people": [
   {
